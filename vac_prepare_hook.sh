@@ -37,9 +37,9 @@ ONE_CONTEXT_PATH="/var/lib/amiconfig"
 EOF
 
 # Setup NFS exports
-vacdir_out="/var/lib/vac/machines/$cluster_id/$proc_id/shared/machineoutputs"
-vacdir_mf="/var/lib/vac/machines/$cluster_id/$proc_id/machinefeatures"
-vacdir_job="/var/lib/vac/machines/$cluster_id/$proc_id/jobfeatures"
+vacdir_out="$path/machineoutputs"
+vacdir_mf="$path/machinefeatures"
+vacdir_job="$path/jobfeatures"
 mkdir -p $vacdir_out
 mkdir -p $vacdir_mf
 mkdir -p $vacdir_job
@@ -47,12 +47,19 @@ sudo /usr/sbin/exportfs -o no_root_squash,rw 192.168.122.*:$vacdir_out
 sudo /usr/sbin/exportfs -o no_root_squash,rw 192.168.122.*:$vacdir_mf
 sudo /usr/sbin/exportfs -o no_root_squash,rw 192.168.122.*:$vacdir_job
 
+# Required jobfeatures & machinefeatures
 if [ -n "$vac_space" ]; then
    echo $vac_space > $vacdir_mf/vac_space
-   echo "$cluster_id.$proc_id" > $vacdir_mf/vac_uuid
-   echo "raltest" > $vacdir_mf/vac_vmtype
-   echo "259200" > $vacdir_job/cpu_limit_secs
 fi
+echo "$cluster_id.$proc_id" > $vacdir_mf/vac_uuid
+echo "raltest" > $vacdir_mf/vac_vmtype
+echo "259200" > $vacdir_job/cpu_limit_secs
+
+# Condor will try to transfer these files back to the submit node - if
+# they're not there for some reason this will cause the job to go into
+# the held state
+touch $vacdir_out/vm-bootstrap.log
+touch $vacdir_out/vm-pilot.log
 
 # Determine the name of the slot & hostname
 machine_name=`grep Name .machine.ad | grep slot | awk '{print $3}'`
@@ -90,6 +97,7 @@ cp prolog.sh $tmpdir/.
 
 # Create contextualization iso
 genisoimage -quiet -o context.iso $tmpdir
+rm -rf $tmpdir
 
 # Create CVMFS cache
 truncate -s 20G cernvm-hd.img
