@@ -1,7 +1,7 @@
 HTCondorVMs
 ===========
 
-Adds the ability to a HTCondor pool for VMs to appear by "spontaneous production in the vacuum". Based on the ideas in http://www.gridpp.ac.uk/vac/.
+Adds the ability to a HTCondor pool for VMs to appear by "spontaneous production in the vacuum". Based on the ideas in http://www.gridpp.ac.uk/vac/ but here the VMs are mananged by HTCondor. A permanently running scheduler universe job submits VM universe jobs as necessay. If there is an error or is no work available, 2 VMs are created every 30 minutes. If work is available, more VMs are created until work runs out or too many VMs stay in the idle state.
 
 ### Worker node setup
 * Enable virtualization in the BIOS
