@@ -25,3 +25,5 @@ User data needs to be prepared in exactly the same way as done for Vac.
 * For GridPP, see https://www.gridpp.ac.uk/wiki/Vac_configuration_for_GridPP_DIRAC
 
 ### Running the scheduler universe job
+* Download the latest CernVM 3 iso from here http://cernvm.cern.ch/portal/downloads
+* Edit the job description file for creating the VMs as appropriate. An example is https://github.com/alahiff/HTCondorVMs/blob/master/vm-atlas.sub 
