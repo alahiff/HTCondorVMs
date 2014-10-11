@@ -1,0 +1,25 @@
+universe = vm
+executable = VM-ATLAS
+
+vm_type = kvm
+vm_networking = true
+vm_networking_type = nat
+vm_memory = 3000
+vm_disk = ucernvm-prod.1.18-2.cernvm.x86_64.iso:hda:r:raw
+vm_no_output_vm = false
+
+request_memory = 3000
+transfer_input_files=root.pub,ucernvm-prod.1.18-2.cernvm.x86_64.iso,user_data.MpGUpphM
+transfer_output_files = machineoutputs/vm-bootstrap.log,machineoutputs/vm-pilot.log
+transfer_output_remaps = "vm-bootstrap.log=vm-bootstrap-$(Cluster).$(Process).log;vm-pilot.log=vm-pilot-$(Cluster).$(Process).log"
+log = /tmp/vm-atlas-$(Cluster).$(Process).log
+
++PublicKey="root.pub"
++UserData="user_data.MpGUpphM"
++HookKeyword="VAC"
++WantIOProxy = true
+
+leave_in_queue = JobStatus == 4 && ( CompletionDate =?= undefined || CompletionDate == 0 || ( ( CurrentTime - CompletionDate ) < 2400 ) )
+periodic_remove = ((JobStatus == 5 && ((CurrentTime - EnteredCurrentStatus) > 24 * 60 * 60)) || ((CurrentTime - EnteredCurrentStatus) > 3 * 24 * 60 * 60))
+
+queue 1
