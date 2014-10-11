@@ -19,8 +19,9 @@ Adds the ability to a HTCondor pool for VMs to appear by "spontaneous production
 * Run "condor_status -vm" to check the your worker nodes with virtualization appear
 
 ### Prepare user data
-* For ATLAS, follow http://svnweb.cern.ch/world/wsvn/vacproject/atlas/README
-* For LHCb, follow https://twiki.cern.ch/twiki/bin/view/LHCb/VacConfiguration
-* For GridPP, follow https://www.gridpp.ac.uk/wiki/Vac_configuration_for_GridPP_DIRAC
+User data needs to be prepared in exactly the same way as done for Vac.
+* For ATLAS, see http://svnweb.cern.ch/world/wsvn/vacproject/atlas/README
+* For LHCb, see https://twiki.cern.ch/twiki/bin/view/LHCb/VacConfiguration
+* For GridPP, see https://www.gridpp.ac.uk/wiki/Vac_configuration_for_GridPP_DIRAC
 
 ### Running the scheduler universe job
