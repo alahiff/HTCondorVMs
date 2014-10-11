@@ -1,7 +1,7 @@
 HTCondorVMs
 ===========
 
-Adds the ability to a HTCondor pool for VMs to appear by "spontaneous production in the vacuum". Based on the ideas in http://www.gridpp.ac.uk/vac/ but here the VMs are mananged by HTCondor. A permanently running scheduler universe job submits VM universe jobs as necessay. If there is an error or is no work available, 2 VMs are created every hour. If work is available, more VMs are created until work runs out or too many VMs stay in the idle state (either due to fairshares or resources are not available).
+Adds the ability to a HTCondor pool for VMs to appear by "spontaneous production in the vacuum". Based on the ideas in http://www.gridpp.ac.uk/vac/ but here the VMs are mananged by HTCondor. A permanently running scheduler universe job submits VM universe jobs as necessay. If there is an error or is no work available, only 2 VMs are created every hour. If work is available, more VMs are created until work runs out or too many VMs stay in the idle state. The number of running VMs is limited by available resources and fairshares.
 
 ### Worker node setup
 * Enable virtualization in the BIOS
@@ -25,6 +25,6 @@ User data needs to be prepared in exactly the same way as done for Vac.
 * For GridPP, see https://www.gridpp.ac.uk/wiki/Vac_configuration_for_GridPP_DIRAC
 
 ### Running the scheduler universe job
-A scheduder universe job needs to be setup and submitted for each VO you wish to support.
+A scheduler universe job needs to be setup and submitted for each VO you wish to support.
 * Download the latest CernVM 3 iso from here http://cernvm.cern.ch/portal/downloads
 * Edit the job description file for creating the VMs as appropriate. An example is https://github.com/alahiff/HTCondorVMs/blob/master/vm-atlas.sub 
